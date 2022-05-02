@@ -1,0 +1,1 @@
+UPDATE dogs SET name = REGEXP_REPLACE(name, ' .*', '');
