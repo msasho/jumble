@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  mysql:
+    build: ./mysql/ #Dockerfileのパス
+    ports:
+      - "33060:3306" #ホストの33060番ポートとコンテナの3306番ポートをマッピング
+    volumes:
+      - ./mysql/db:/docker-entrypoint-initdb.d #初期データをマウントする場所
+    image: mysql_sample:latest #イメージ名
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysql_password 
