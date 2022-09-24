@@ -1,0 +1,14 @@
+version: '3'
+services:
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    environment:
+        MINIO_ROOT_USER: localid
+        MINIO_ROOT_PASSWORD: localpassword
+    command: ["minio", "server", "/data", "--console-address", ":8080"]
+    volumes:
+        - ./minio_data:/export  # MinIOストレージの永続化
+    ports:
+        - '9000:9000'
+        - "8080:8080"
