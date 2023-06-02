@@ -19,9 +19,34 @@ services:
   stepfunctions:
     container_name: stepfunctions
     image: amazon/aws-stepfunctions-local:latest
-    # env_file: stepfunctions-credentials.env
+    env_file: ./step_functions/aws-stepfunctions-local-credentials.txt
     environment:
-      # - LAMBDA_ENDPOINT=http://localstack:4566
       - STEPFUNCTIONS_LAMBDA_ENDPOINT=http://host.docker.internal:4566
     ports:
       - '8083:8083'
+      
+  glue:
+    container_name: glue.dev
+    image: amazon/aws-glue-libs:glue_libs_3.0.0_image_01
+    # volumes:
+    #   - ./:/home/glue_user/workspace/jupyter_workspace
+    #   - ./spark.conf:/home/glue_user/spark/conf/spark-defaults.conf
+    environment:
+      - DISABLE_SSL=true
+      # dummy configure
+      - AWS_REGION=ap-northeast-1
+      - AWS_OUTPUT=json
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+    ports:
+      # jupyterlabのポート
+      - 8888:8888
+      # spark uiのポート
+      - 4040:4040
+    networks:
+      - glue.dev.network
+    command: /home/glue_user/jupyter/jupyter_start.sh
+networks:
+  glue.dev.network:
+    name: glue.dev.network
+  

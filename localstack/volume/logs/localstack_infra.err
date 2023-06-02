@@ -1,5 +1,11 @@
-2022-09-25T02:00:31.778  WARN --- [  Thread-111] hypercorn.error            : ASGI Framework Lifespan error, continuing without Lifespan support
-2022-09-25T02:00:31.778  WARN --- [  Thread-111] hypercorn.error            : ASGI Framework Lifespan error, continuing without Lifespan support
-2022-09-25T02:00:31.780  INFO --- [  Thread-111] hypercorn.error            : Running on https://0.0.0.0:4566 (CTRL + C to quit)
-2022-09-25T02:00:31.780  INFO --- [  Thread-111] hypercorn.error            : Running on https://0.0.0.0:4566 (CTRL + C to quit)
-2022-09-25T02:00:32.064  INFO --- [  MainThread] localstack.utils.bootstrap : Execution of "start_runtime_components" took 1072.78ms
+2022-09-25T05:06:25.116  INFO --- [  MainThread] localstack.utils.bootstrap : Execution of "prepare_installation" took 512.59ms
+2022-09-25T05:06:25.408  WARN --- [  Thread-109] hypercorn.error            : ASGI Framework Lifespan error, continuing without Lifespan support
+2022-09-25T05:06:25.408  WARN --- [  Thread-109] hypercorn.error            : ASGI Framework Lifespan error, continuing without Lifespan support
+2022-09-25T05:06:25.410  INFO --- [  Thread-109] hypercorn.error            : Running on https://0.0.0.0:4566 (CTRL + C to quit)
+2022-09-25T05:06:25.410  INFO --- [  Thread-109] hypercorn.error            : Running on https://0.0.0.0:4566 (CTRL + C to quit)
+2022-09-25T05:06:25.829  INFO --- [  Thread-114] l.services.motoserver      : starting moto server on http://0.0.0.0:55297
+2022-09-25T05:06:25.838  INFO --- [   asgi_gw_0] localstack.services.infra  : Starting mock S3 service on http port 4566 ...
+2022-09-25T05:06:26.354  INFO --- [   asgi_gw_0] localstack.utils.bootstrap : Execution of "require" took 533.35ms
+2022-09-25T05:06:26.504  INFO --- [   asgi_gw_0] localstack.request.aws     : AWS s3.CreateBucket => 200
+2022-09-25T05:06:26.976  INFO --- [   asgi_gw_0] localstack.request.aws     : AWS s3.PutObject => 200
+2022-09-25T05:06:27.000  INFO --- [   asgi_gw_0] localstack.request.aws     : AWS s3.PutObject => 200

@@ -1,0 +1,74 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Parameters:
+  TestName:
+    Type: String
+  Env:
+    Type: String
+    AllowedValues:
+      - develop
+      - production
+
+Mappings:
+  EnvMap:
+    develop:
+      S3Bucket: develop-bucket
+    production:
+      S3Bucket: production-bucket
+
+Conditions:
+  IsTrial: !Equals
+    - !Ref Env
+    - trial
+
+Resources:
+  Policy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      Path: /
+      ManagedPolicyName: !Sub CodeBuildBasePolicy-${TestName}-${AWS::Region}
+      PolicyDocument:
+        {
+            "Version": "2012-10-17",
+            "Statement": [
+                {
+                    "Effect": "Allow",
+                    "Resource": [
+                        "Fn::Sub":"arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/codebuild/${TestName}",
+                        "Fn::Sub":"arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/codebuild/${TestName}:*"
+                    ],
+                    "Action": [
+                        "logs:CreateLogGroup",
+                        "logs:CreateLogStream",
+                        "logs:PutLogEvents"
+                    ]
+                },
+                {
+                    "Effect": "Allow",
+                    "Resource": [
+                        "Fn::Sub":"arn:aws:s3:::codepipeline-${AWS::Region}-*",
+                        "Fn::FindInMap":[EnvMap, !Ref Env, S3Arn]
+                    ],
+                    "Action": [
+                        "s3:PutObject",
+                        "s3:GetObject",
+                        "s3:GetObjectVersion",
+                        "s3:GetBucketAcl",
+                        "s3:GetBucketLocation"
+                    ]
+                },
+                {
+                    "Effect": "Allow",
+                    "Action": [
+                        "codebuild:CreateReportGroup",
+                        "codebuild:CreateReport",
+                        "codebuild:UpdateReport",
+                        "codebuild:BatchPutTestCases",
+                        "codebuild:BatchPutCodeCoverages"
+                    ],
+                    "Resource": [
+                        "Fn::Sub":"arn:aws:codebuild:${AWS::Region}:${AWS::AccountId}:report-group/${TestName}-*"
+                    ]
+                }
+            ]
+        }
