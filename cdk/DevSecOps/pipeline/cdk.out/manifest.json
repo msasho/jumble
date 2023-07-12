@@ -1,0 +1,592 @@
+{
+  "version": "20.0.0",
+  "artifacts": {
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    },
+    "AppSecWorkshopStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "AppSecWorkshopStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "AppSecWorkshopStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "AppSecWorkshopStack.template.json",
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c54c4759e0729c64fc805b68c39f75513f217bc840b0ef8a86b72ff5841e5ced.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "AppSecWorkshopStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "AppSecWorkshopStack.assets"
+      ],
+      "metadata": {
+        "/AppSecWorkshopStack/Infra/StagingVPC/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "InfraStagingVPC34972FF5"
+          }
+        ],
+        "/AppSecWorkshopStack/Infra/StagingVPC/PublicSubnet1/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "InfraStagingVPCPublicSubnet1SubnetCFAB7CA5"
+          }
+        ],
+        "/AppSecWorkshopStack/Infra/StagingVPC/PublicSubnet1/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "InfraStagingVPCPublicSubnet1RouteTable5EC523A1"
+          }
+        ],
+        "/AppSecWorkshopStack/Infra/StagingVPC/PublicSubnet1/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "InfraStagingVPCPublicSubnet1RouteTableAssociation24716B2F"
+          }
+        ],
+        "/AppSecWorkshopStack/Infra/StagingVPC/PublicSubnet1/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "InfraStagingVPCPublicSubnet1DefaultRoute8DEE7A33"
+          }
+        ],
+        "/AppSecWorkshopStack/Infra/StagingVPC/PublicSubnet1/EIP": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "InfraStagingVPCPublicSubnet1EIP31E1D68F"
+          }
+        ],
+        "/AppSecWorkshopStack/Infra/StagingVPC/PublicSubnet1/NATGateway": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "InfraStagingVPCPublicSubnet1NATGatewayE735FC1B"
+          }
+        ],
+        "/AppSecWorkshopStack/Infra/StagingVPC/PublicSubnet2/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "InfraStagingVPCPublicSubnet2Subnet1D8E2127"
+          }
+        ],
+        "/AppSecWorkshopStack/Infra/StagingVPC/PublicSubnet2/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "InfraStagingVPCPublicSubnet2RouteTable13504A70"
+          }
+        ],
+        "/AppSecWorkshopStack/Infra/StagingVPC/PublicSubnet2/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "InfraStagingVPCPublicSubnet2RouteTableAssociation1A3177C2"
+          }
+        ],
+        "/AppSecWorkshopStack/Infra/StagingVPC/PublicSubnet2/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "InfraStagingVPCPublicSubnet2DefaultRoute6485960A"
+          }
+        ],
+        "/AppSecWorkshopStack/Infra/StagingVPC/PublicSubnet2/EIP": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "InfraStagingVPCPublicSubnet2EIPD531543A"
+          }
+        ],
+        "/AppSecWorkshopStack/Infra/StagingVPC/PublicSubnet2/NATGateway": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "InfraStagingVPCPublicSubnet2NATGatewayC09EED77"
+          }
+        ],
+        "/AppSecWorkshopStack/Infra/StagingVPC/PrivateSubnet1/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "InfraStagingVPCPrivateSubnet1Subnet8C4FCFE0"
+          }
+        ],
+        "/AppSecWorkshopStack/Infra/StagingVPC/PrivateSubnet1/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "InfraStagingVPCPrivateSubnet1RouteTableB5124C93"
+          }
+        ],
+        "/AppSecWorkshopStack/Infra/StagingVPC/PrivateSubnet1/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "InfraStagingVPCPrivateSubnet1RouteTableAssociationD16A20B1"
+          }
+        ],
+        "/AppSecWorkshopStack/Infra/StagingVPC/PrivateSubnet1/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "InfraStagingVPCPrivateSubnet1DefaultRoute7C27375A"
+          }
+        ],
+        "/AppSecWorkshopStack/Infra/StagingVPC/PrivateSubnet2/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "InfraStagingVPCPrivateSubnet2SubnetBBE9C772"
+          }
+        ],
+        "/AppSecWorkshopStack/Infra/StagingVPC/PrivateSubnet2/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "InfraStagingVPCPrivateSubnet2RouteTable636B5FF2"
+          }
+        ],
+        "/AppSecWorkshopStack/Infra/StagingVPC/PrivateSubnet2/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "InfraStagingVPCPrivateSubnet2RouteTableAssociationE5F2573A"
+          }
+        ],
+        "/AppSecWorkshopStack/Infra/StagingVPC/PrivateSubnet2/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "InfraStagingVPCPrivateSubnet2DefaultRouteC73F519E"
+          }
+        ],
+        "/AppSecWorkshopStack/Infra/StagingVPC/IGW": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "InfraStagingVPCIGW607AE6C8"
+          }
+        ],
+        "/AppSecWorkshopStack/Infra/StagingVPC/VPCGW": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "InfraStagingVPCVPCGW478D193B"
+          }
+        ],
+        "/AppSecWorkshopStack/Infra/StagingCluster/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "InfraStagingCluster9FEEA6CC"
+          }
+        ],
+        "/AppSecWorkshopStack/DevTools/Repository/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DevToolsRepository73537717"
+          }
+        ],
+        "/AppSecWorkshopStack/DevTools/Repository/AppSecWorkshopStackPipeline9A68083B-main-EventRule/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DevToolsRepositoryAppSecWorkshopStackPipeline9A68083BmainEventRuleFC13FB1B"
+          }
+        ],
+        "/AppSecWorkshopStack/DevTools/RepositoryAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DevToolsRepositoryAssociation616F98BB"
+          }
+        ],
+        "/AppSecWorkshopStack/DevTools/CodeGuruRepositoryAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DevToolsCodeGuruRepositoryAssociation73C3B4B4"
+          }
+        ],
+        "/AppSecWorkshopStack/DevTools/ECR/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DevToolsECRE3832726"
+          }
+        ],
+        "/AppSecWorkshopStack/DevTools/OWASPZapSG/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DevToolsOWASPZapSGC30CDBF9"
+          }
+        ],
+        "/AppSecWorkshopStack/DevTools/Zaproxy/InstanceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DevToolsZaproxyInstanceRole9860A5F0"
+          }
+        ],
+        "/AppSecWorkshopStack/DevTools/Zaproxy/InstanceProfile": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DevToolsZaproxyInstanceProfileDF61CE08"
+          }
+        ],
+        "/AppSecWorkshopStack/DevTools/Zaproxy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DevToolsZaproxy1D2BB1AB"
+          }
+        ],
+        "/AppSecWorkshopStack/SsmParameterValue:--aws--service--ami-amazon-linux-latest--amzn2-ami-hvm-x86_64-gp2:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmx8664gp2C96584B6F00A464EAD1953AFF4B05118Parameter"
+          }
+        ],
+        "/AppSecWorkshopStack/Tasks/FlaskApp/LB/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TasksFlaskAppLBFF44C019"
+          }
+        ],
+        "/AppSecWorkshopStack/Tasks/FlaskApp/LB/SecurityGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TasksFlaskAppLBSecurityGroupE2475264"
+          }
+        ],
+        "/AppSecWorkshopStack/Tasks/FlaskApp/LB/SecurityGroup/to AppSecWorkshopStackTasksFlaskAppServiceSecurityGroup23336A26:5000": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TasksFlaskAppLBSecurityGrouptoAppSecWorkshopStackTasksFlaskAppServiceSecurityGroup23336A265000968AB4B5"
+          }
+        ],
+        "/AppSecWorkshopStack/Tasks/FlaskApp/LB/PublicListener/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TasksFlaskAppLBPublicListenerF08B8AF2"
+          }
+        ],
+        "/AppSecWorkshopStack/Tasks/FlaskApp/LB/PublicListener/ECSGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TasksFlaskAppLBPublicListenerECSGroupF23BBD07"
+          }
+        ],
+        "/AppSecWorkshopStack/Tasks/FlaskApp/LoadBalancerDNS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TasksFlaskAppLoadBalancerDNS3FCA28D4"
+          }
+        ],
+        "/AppSecWorkshopStack/Tasks/FlaskApp/ServiceURL": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TasksFlaskAppServiceURL23D95527"
+          }
+        ],
+        "/AppSecWorkshopStack/Tasks/FlaskApp/TaskDef/TaskRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TasksFlaskAppTaskDefTaskRole81BEFCF3"
+          }
+        ],
+        "/AppSecWorkshopStack/Tasks/FlaskApp/TaskDef/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TasksFlaskAppTaskDef6C08FBA3"
+          }
+        ],
+        "/AppSecWorkshopStack/Tasks/FlaskApp/TaskDef/flask-app/LogGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TasksFlaskAppTaskDefflaskappLogGroup88C0DD05"
+          }
+        ],
+        "/AppSecWorkshopStack/Tasks/FlaskApp/TaskDef/ExecutionRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TasksFlaskAppTaskDefExecutionRole7457B8D2"
+          }
+        ],
+        "/AppSecWorkshopStack/Tasks/FlaskApp/TaskDef/ExecutionRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TasksFlaskAppTaskDefExecutionRoleDefaultPolicyFE457DFB"
+          }
+        ],
+        "/AppSecWorkshopStack/Tasks/FlaskApp/Service/Service": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TasksFlaskAppService3E10A3D1"
+          }
+        ],
+        "/AppSecWorkshopStack/Tasks/FlaskApp/Service/SecurityGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TasksFlaskAppServiceSecurityGroup8E8E4B68"
+          }
+        ],
+        "/AppSecWorkshopStack/Tasks/FlaskApp/Service/SecurityGroup/from AppSecWorkshopStackTasksFlaskAppLBSecurityGroup9A832198:5000": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TasksFlaskAppServiceSecurityGroupfromAppSecWorkshopStackTasksFlaskAppLBSecurityGroup9A8321985000242191DF"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/Pipeline/ArtifactsBucketEncryptionKey/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineArtifactsBucketEncryptionKeyF5BF0670"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/Pipeline/ArtifactsBucketEncryptionKeyAlias/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineArtifactsBucketEncryptionKeyAlias94A07392"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/Pipeline/ArtifactsBucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineArtifactsBucketAEA9A052"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/Pipeline/ArtifactsBucket/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineArtifactsBucketPolicyF53CCC52"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/Pipeline/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineRoleB27FAA37"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/Pipeline/Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineRoleDefaultPolicy7BDC1ABB"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/Pipeline/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "Pipeline9850B417"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/Pipeline/CheckoutSource/CodeCommit/CodePipelineActionRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineCheckoutSourceCodeCommitCodePipelineActionRoleDD13C096"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/Pipeline/CheckoutSource/CodeCommit/CodePipelineActionRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineCheckoutSourceCodeCommitCodePipelineActionRoleDefaultPolicy9194635B"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/Pipeline/EventsRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineEventsRole96280D9B"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/Pipeline/EventsRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineEventsRoleDefaultPolicy62809D8F"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/Pipeline/ApplicationSecurityChecks/SAST/CodePipelineActionRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineApplicationSecurityChecksSASTCodePipelineActionRoleDD3ADF3A"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/Pipeline/ApplicationSecurityChecks/SAST/CodePipelineActionRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineApplicationSecurityChecksSASTCodePipelineActionRoleDefaultPolicy3EF34354"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/Pipeline/ApplicationSecurityChecks/SCA/CodePipelineActionRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineApplicationSecurityChecksSCACodePipelineActionRole73201596"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/Pipeline/ApplicationSecurityChecks/SCA/CodePipelineActionRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineApplicationSecurityChecksSCACodePipelineActionRoleDefaultPolicy0466A9A6"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/Pipeline/ApplicationSecurityChecks/Licenses/CodePipelineActionRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineApplicationSecurityChecksLicensesCodePipelineActionRole5CB853ED"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/Pipeline/ApplicationSecurityChecks/Licenses/CodePipelineActionRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineApplicationSecurityChecksLicensesCodePipelineActionRoleDefaultPolicy89759762"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/Pipeline/BuildImage/DockerBuildImage/CodePipelineActionRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineBuildImageDockerBuildImageCodePipelineActionRole5E85C50D"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/Pipeline/BuildImage/DockerBuildImage/CodePipelineActionRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineBuildImageDockerBuildImageCodePipelineActionRoleDefaultPolicy2E7E9E36"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/Pipeline/DeployToStaging/DeployToStaging/CodePipelineActionRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineDeployToStagingCodePipelineActionRoleCFE4EB51"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/Pipeline/DeployToStaging/DeployToStaging/CodePipelineActionRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineDeployToStagingCodePipelineActionRoleDefaultPolicyA88153E2"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/Pipeline/DAST/DAST/CodePipelineActionRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineDASTCodePipelineActionRoleAFC5138C"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/Pipeline/DAST/DAST/CodePipelineActionRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineDASTCodePipelineActionRoleDefaultPolicyC199CD48"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/SAST/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineSASTRole4002E9FF"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/SAST/Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineSASTRoleDefaultPolicyACC43F57"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/SAST/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineSAST7856E46E"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/SCA/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineSCARole1D63C89A"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/SCA/Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineSCARoleDefaultPolicy657BEB6C"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/SCA/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineSCA19E6AAB1"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/LicenseCheck/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineLicenseCheckRoleB58F43D5"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/LicenseCheck/Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineLicenseCheckRoleDefaultPolicy8D9424A5"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/LicenseCheck/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineLicenseCheck71EE988D"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/DockerBuild/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineDockerBuildRole83FA7279"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/DockerBuild/Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineDockerBuildRoleDefaultPolicy9506189A"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/DockerBuild/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineDockerBuild34662BB1"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/DAST/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineDASTRole4F641C36"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/DAST/Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineDASTRoleDefaultPolicyB4563396"
+          }
+        ],
+        "/AppSecWorkshopStack/Pipeline/DAST/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineDAST7CC2FDCB"
+          }
+        ],
+        "/AppSecWorkshopStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/AppSecWorkshopStack/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/AppSecWorkshopStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/AppSecWorkshopStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "AppSecWorkshopStack"
+    }
+  }
+}
