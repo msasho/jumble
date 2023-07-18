@@ -5,8 +5,8 @@ on:
   pull_request: # プルリクエストをトリガーにする。
     branches: # トリガーさせるマージ先ブランチを制限。
       - main
-    paths:
-      - "cdk/scraping-lambda/*"
+    # paths:
+    #   - "cdk/scraping-lambda/*"
     types:
       - closed
 env:
