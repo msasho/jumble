@@ -22,7 +22,7 @@ export class scrapingLambdaFunction extends Construct {
             runtime: Runtime.PYTHON_3_9,
             code: Code.fromAsset("lambda"),
             handler: "lambda_function.lambda_handler",
-            timeout: Duration.seconds(30)
+            timeout: Duration.seconds(60)
         });
 
     }
