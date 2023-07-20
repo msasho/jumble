@@ -24,6 +24,5 @@ export class scrapingLambdaFunction extends Construct {
             handler: "lambda_function.lambda_handler",
             timeout: Duration.seconds(60)
         });
-
     }
 }
