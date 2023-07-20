@@ -47,4 +47,4 @@ jobs:
       - name: Deploy
         run: |
           cd cdk/scraping-lambda
-          npm run deploy
+          npx cdk deploy --all --require-approval never
