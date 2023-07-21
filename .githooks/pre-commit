@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# Check for unresolved merge conflicts
+conflicts=$(git diff --cached --name-only -G"<<<<<|=====|>>>>>")
+
+# If conflicts exist, print the conflicted files and exit with a non-zero status code
+if [[ -n "$conflicts" ]]; then
+    echo "Please resolve the following unresolved merge conflicts:"
+    for conflict in $conflicts; do
+        echo "Conflict in file: $conflict"
+    done
+    exit 1
+fi
+
+git secrets --scan -r || {
+    echo >&2 "COMMIT REJECTED due to detected AWS secret keys"
+    exit 1
+}
+
+# If no conflicts, exit successfully
+exit 0
