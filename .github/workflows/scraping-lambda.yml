@@ -43,6 +43,7 @@ jobs:
         run: |
           cd cdk/scraping-lambda
           npm install
+          npm install @aws-cdk/aws-lambda-python-alpha
 
       - name: Deploy
         run: |
