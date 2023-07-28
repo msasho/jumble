@@ -31,8 +31,7 @@ export class Ci extends Construct {
             webhook: true,
             webhookFilters: [
                 codeBuild.FilterGroup
-                    .inEventOf(codeBuild.EventAction.PULL_REQUEST_CREATED)
-                    .andBranchIs('main')
+                    .inEventOf(codeBuild.EventAction.PULL_REQUEST_CREATED, codeBuild.EventAction.PULL_REQUEST_REOPENED)
             ],
         });
 
