@@ -80,8 +80,8 @@ aws s3 cp selenium.zip s3://lambda-layer-155385059623
 aws s3 cp headless.zip s3://lambda-layer-155385059623
 
 # Lambdaレイヤーの作成
-aws lambda publish-layer-version --layer-name selenium-layer --description "selenium layer" --content S3Bucket=lambda-layer-155385059623,S3Key=selenium.zip --compatible-runtimes python3.8 python3.9 python3.10
+aws lambda publish-layer-version --layer-name selenium-layer --description "selenium layer" --content S3Bucket=lambda-layer-155385059623,S3Key=selenium.zip --compatible-runtimes python3.7 python3.8 python3.9 python3.10 python3.11
 
-aws lambda publish-layer-version --layer-name headless-layer --description "headless-chromium and chromedriver layer" --content S3Bucket=lambda-layer-155385059623,S3Key=headless.zip --compatible-runtimes python3.8 python3.9 python3.10
+aws lambda publish-layer-version --layer-name headless-layer --description "headless-chromium and chromedriver layer" --content S3Bucket=lambda-layer-155385059623,S3Key=headless.zip --compatible-runtimes python3.7 python3.8 python3.9 python3.10 python3.11
 
 ```
