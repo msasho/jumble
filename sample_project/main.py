@@ -1,8 +1,10 @@
-import requests
+import numpy as np
 
-def fetch_data(url):
-    response = requests.get(url)
-    if response.status_code == 200:
-        return response.text
-    else:
-        return None
+def array_operations(arr):
+    # 配列の平均値を計算
+    mean_value = np.mean(arr)
+
+    # 配列の最大値を計算
+    max_value = np.max(arr)
+
+    return mean_value, max_value
