@@ -1,0 +1,76 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  gmo-transactions
+
+  Sample SAM Template for gmo-transactions
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  # Order
+  MarketOrderFunctionEth:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: hello-world/
+      Handler: app.marketOrderHandler
+      Runtime: nodejs20.x
+      Architectures:
+        - x86_64
+      Events:
+        CloudWatchEvent:
+          Type: Schedule
+          Properties:
+            Schedule: cron(1 0 ? * MON *)
+      Timeout: 100
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AmazonS3FullAccess
+        - SecretsManagerReadWrite
+      Environment:
+        Variables:
+          JPY_BUDGET: "5000"
+          PAIR: "SYMBOL"
+    Metadata: # Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints:
+          - app.ts
+
+  # # Withdrawal
+  # WithdrawalFunction:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     CodeUri: hello-world/
+  #     Handler: app.withdrawalHandler
+  #     Runtime: nodejs20.x
+  #     Architectures:
+  #       - x86_64
+  #     Events:
+  #       CloudWatchEvent:
+  #         Type: Schedule
+  #         Properties:
+  #           Schedule: cron(0 1 * * ? *)
+  #     MemorySize: 128
+  #     Timeout: 100
+  #     Policies:
+  #       - AWSLambdaBasicExecutionRole
+  #       - AmazonS3FullAccess
+  #       - SecretsManagerReadWrite
+  #     Environment:
+  #       Variables:
+  #         AMOUNT: "0.1"
+  #   Metadata: # Manage esbuild properties
+  #     BuildMethod: esbuild
+  #     BuildProperties:
+  #       Minify: true
+  #       Target: "es2020"
+  #       Sourcemap: true
+  #       EntryPoints:
+  #         - app.ts
