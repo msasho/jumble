@@ -30,14 +30,14 @@ async function getApiKeys() {
             throw error;
         }
     }
-    const apiKeySecret = await getSecret("gmoCoin/apiKey");
-    const apiSecretSecret = await getSecret("gmoCoin/secretKey");
-    if (!apiKeySecret || !apiSecretSecret) {
+    const apiKey = await getSecret("gmo/apiKey");
+    const secretKey = await getSecret("gmo/secretKey");
+    if (!apiKey || !secretKey) {
         throw new Error("Secrets not found");
     }
     return {
-        apiKey: apiKeySecret.apiKey,
-        secretKey: apiSecretSecret.secretKey,
+        apiKey: apiKey.apiKey,
+        secretKey: secretKey.secretKey,
     };
 }
 
@@ -78,7 +78,7 @@ async function getCurrentPrice(symbol: string) {
 /**
  * 新規注文を行う
  */
-async function placeOrder() {
+export async function placeOrder() {
     const {apiKey, secretKey} = await getApiKeys()
     const currentPrice = await getCurrentPrice(symbol);
     const amount = (jpyBudget/Number(currentPrice)).toFixed(4)
@@ -184,4 +184,4 @@ async function placeOrder() {
 //     }
 // };
 
-placeOrder();
+// placeOrder();
