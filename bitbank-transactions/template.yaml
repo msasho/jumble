@@ -64,7 +64,7 @@ Resources:
         - SecretsManagerReadWrite
       Environment:
         Variables:
-          JPY_BUDGET: "1000"
+          JPY_BUDGET: "2000"
           PAIR: "eth_jpy"
     Metadata: # Manage esbuild properties
       BuildMethod: esbuild
@@ -96,8 +96,40 @@ Resources:
         - SecretsManagerReadWrite
       Environment:
         Variables:
-          JPY_BUDGET: "1000"
+          JPY_BUDGET: "2000"
           PAIR: "avax_jpy"
+    Metadata: # Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints:
+          - app.ts
+
+  MarketOrderFunctionBtc:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: hello-world/
+      Handler: app.marketOrderHandler
+      Runtime: nodejs20.x
+      Architectures:
+        - x86_64
+      Events:
+        CloudWatchEvent:
+          Type: Schedule
+          Properties:
+            Schedule: cron(2 0 * * ? *)
+      MemorySize: 128
+      Timeout: 100
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AmazonS3FullAccess
+        - SecretsManagerReadWrite
+      Environment:
+        Variables:
+          JPY_BUDGET: "1000"
+          PAIR: "btc_jpy"
     Metadata: # Manage esbuild properties
       BuildMethod: esbuild
       BuildProperties:
