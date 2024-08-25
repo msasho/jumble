@@ -1,27 +1,29 @@
 import { GetSecretValueCommand, SecretsManagerClient } from "@aws-sdk/client-secrets-manager";
 import { APIGatewayProxyResult } from "aws-lambda";
 import * as bitbank from "node-bitbankcc";
+import axios from "axios";
 
 const jpyBudget = process.env.JPY_BUDGET ? Number(process.env.JPY_BUDGET) : 1000;
 const pair = process.env.PAIR ? process.env.PAIR : "xrp_jpy";
 
-async function getApiKeys() {
-    async function getSecret(secretName: string) {
-        const client = new SecretsManagerClient({
-            region: "ap-northeast-1",
-        });
-        try {
-            const { SecretString } = await client.send(
-                new GetSecretValueCommand({
-                    SecretId: secretName,
-                    VersionStage: "AWSCURRENT",
-                }),
-            );
-            return SecretString ? JSON.parse(SecretString) : null;
-        } catch (error) {
-            throw error;
-        }
+async function getSecret(secretName: string) {
+    const client = new SecretsManagerClient({
+        region: "ap-northeast-1",
+    });
+    try {
+        const { SecretString } = await client.send(
+            new GetSecretValueCommand({
+                SecretId: secretName,
+                VersionStage: "AWSCURRENT",
+            }),
+        );
+        return SecretString ? JSON.parse(SecretString) : null;
+    } catch (error) {
+        throw error;
     }
+}
+
+async function getApiKeys() {
     const apiKeySecret = await getSecret("bitbank/apiKey");
     const apiSecretSecret = await getSecret("bitbank/apiSecret");
     if (!apiKeySecret || !apiSecretSecret) {
@@ -31,6 +33,14 @@ async function getApiKeys() {
         apiKey: apiKeySecret.apiKey,
         apiSecret: apiSecretSecret.apiSecret,
     };
+}
+
+async function getSlackWebhookUrl() {
+    const slackWebhookSecret = await getSecret("slack/webhookUrl");
+    if (!slackWebhookSecret) {
+        throw new Error("Slack Webhook URL not found");
+    }
+    return slackWebhookSecret.url;
 }
 
 async function initializePrivateApi() {
@@ -145,6 +155,47 @@ export const withdrawalHandler = async (): Promise<APIGatewayProxyResult> => {
         return {
             statusCode: 500,
             body: JSON.stringify({ message: "Withdrawal failed", error: errorMessage }),
+        };
+    }
+};
+
+/**
+ * Slack通知を行う
+ */
+export const slackNotifierHandler = async (): Promise<APIGatewayProxyResult> => {
+    const slackWebhookUrl = await getSlackWebhookUrl();
+
+    if (!slackWebhookUrl) {
+        console.error("Slack Webhook URL is not set");
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ message: "Slack Webhook URL is not set" }),
+        };
+    }
+
+    const privateApi = await initializePrivateApi();
+
+    try {
+        const balance = await privateApi.getAssets();
+        const jpyBalance = balance.data.assets.find((asset) => asset.asset === "jpy")?.free_amount;
+
+        const message = {
+            text: `Current Bitbank JPY Balance: ${jpyBalance} JPY`,
+        };
+
+        // Slackにメッセージを送信するロジックを追加
+        await axios.post(slackWebhookUrl, message);
+
+        console.log("Message sent to Slack successfully");
+        return {
+            statusCode: 200,
+            body: JSON.stringify({ message: "Notification sent to Slack" }),
+        };
+    } catch (error) {
+        console.error("Failed to send message to Slack:", error);
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ message: "Failed to send notification to Slack" }),
         };
     }
 };
