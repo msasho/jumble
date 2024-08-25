@@ -33,7 +33,69 @@ Resources:
       Environment:
         Variables:
           JPY_BUDGET: 10000
-          PAIR: ETH
+          SYMBOL: ETH
+    Metadata: # Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints:
+          - app.ts
+
+  MarketOrderFunctionBtc:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: hello-world/
+      Handler: app.placeOrder
+      Runtime: nodejs20.x
+      Architectures:
+        - x86_64
+      Events:
+        CloudWatchEvent:
+          Type: Schedule
+          Properties:
+            Schedule: cron(1 0 ? * TUE *)
+      Timeout: 100
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AmazonS3FullAccess
+        - SecretsManagerReadWrite
+      Environment:
+        Variables:
+          JPY_BUDGET: 10000
+          SYMBOL: BTC
+    Metadata: # Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints:
+          - app.ts
+
+  MarketOrderFunctionSol:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: hello-world/
+      Handler: app.placeOrder
+      Runtime: nodejs20.x
+      Architectures:
+        - x86_64
+      Events:
+        CloudWatchEvent:
+          Type: Schedule
+          Properties:
+            Schedule: cron(0 1 * * ? *)
+      Timeout: 100
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AmazonS3FullAccess
+        - SecretsManagerReadWrite
+      Environment:
+        Variables:
+          JPY_BUDGET: 1000
+          SYMBOL: SOL
     Metadata: # Manage esbuild properties
       BuildMethod: esbuild
       BuildProperties:
