@@ -24,7 +24,7 @@ Resources:
         CloudWatchEvent:
           Type: Schedule
           Properties:
-            Schedule: cron(1 0 ? * MON *)
+            Schedule: cron(0 0 ? * MON *)
       Timeout: 100
       Policies:
         - AWSLambdaBasicExecutionRole
@@ -55,7 +55,7 @@ Resources:
         CloudWatchEvent:
           Type: Schedule
           Properties:
-            Schedule: cron(1 0 ? * TUE *)
+            Schedule: cron(0 0 ? * TUE *)
       Timeout: 100
       Policies:
         - AWSLambdaBasicExecutionRole
@@ -86,7 +86,7 @@ Resources:
         CloudWatchEvent:
           Type: Schedule
           Properties:
-            Schedule: cron(0 1 * * ? *)
+            Schedule: cron(0 0 * * ? *)
       Timeout: 100
       Policies:
         - AWSLambdaBasicExecutionRole
@@ -97,6 +97,34 @@ Resources:
           JPY_BUDGET: 1000
           SYMBOL: SOL
     Metadata: # Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints:
+          - app.ts
+
+  # New function for daily JPY balance notification
+  DailyJpyBalanceNotification:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: hello-world/
+      Handler: app.notifyJpyBalance
+      Runtime: nodejs20.x
+      Architectures:
+        - x86_64
+      Events:
+        CloudWatchEvent:
+          Type: Schedule
+          Properties:
+            Schedule: cron(0 1 * * ? *) # Runs daily at 1:00 AM UTC
+      Timeout: 100
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AmazonS3FullAccess
+        - SecretsManagerReadWrite
+    Metadata:
       BuildMethod: esbuild
       BuildProperties:
         Minify: true
