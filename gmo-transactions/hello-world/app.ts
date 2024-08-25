@@ -13,23 +13,24 @@ const symbol = process.env.SYMBOL ? process.env.SYMBOL : "ETH";
 //     throw new Error("API_SECRET environment variable is not set.");
 // }
 
-async function getApiKeys() {
-    async function getSecret(secretName: string) {
-        const client = new SecretsManagerClient({
-            region: "ap-northeast-1",
-        });
-        try {
-            const { SecretString } = await client.send(
-                new GetSecretValueCommand({
-                    SecretId: secretName,
-                    VersionStage: "AWSCURRENT",
-                }),
-            );
-            return SecretString ? JSON.parse(SecretString) : null;
-        } catch (error) {
-            throw error;
-        }
+async function getSecret(secretName: string) {
+    const client = new SecretsManagerClient({
+        region: "ap-northeast-1",
+    });
+    try {
+        const { SecretString } = await client.send(
+            new GetSecretValueCommand({
+                SecretId: secretName,
+                VersionStage: "AWSCURRENT",
+            }),
+        );
+        return SecretString ? JSON.parse(SecretString) : null;
+    } catch (error) {
+        throw error;
     }
+}
+
+async function getApiKeys() {
     const apiKey = await getSecret("gmo/apiKey");
     const secretKey = await getSecret("gmo/secretKey");
     if (!apiKey || !secretKey) {
@@ -41,6 +42,13 @@ async function getApiKeys() {
     };
 }
 
+async function getSlackWebhookUrl() {
+    const slackWebhookSecret = await getSecret("slack/webhookUrl");
+    if (!slackWebhookSecret) {
+        throw new Error("Slack Webhook URL not found");
+    }
+    return slackWebhookSecret.url;
+}
 
 /**
  * 現在の価格を取得する
@@ -62,7 +70,7 @@ interface TickerResponse {
 }
 
 async function getCurrentPrice(symbol: string) {
-    const endPoint = 'https://api.coin.z.com/public';
+    const endPoint = "https://api.coin.z.com/public";
     const path = `/v1/ticker?symbol=${symbol}`;
 
     try {
@@ -70,7 +78,7 @@ async function getCurrentPrice(symbol: string) {
         console.log(JSON.stringify(response.data.data[0]));
         return response.data.data[0].bid; // または特定の価格情報のみを返すことも可能
     } catch (error) {
-        console.error('Error fetching current price:', error);
+        console.error("Error fetching current price:", error);
         throw error; // エラーを再スローして呼び出し元で処理できるようにする
     }
 }
@@ -79,15 +87,21 @@ async function getCurrentPrice(symbol: string) {
  * 新規注文を行う
  */
 export async function placeOrder() {
-    const {apiKey, secretKey} = await getApiKeys()
+    const { apiKey, secretKey } = await getApiKeys();
     const currentPrice = await getCurrentPrice(symbol);
-    const amount = (jpyBudget/Number(currentPrice)).toFixed(4)
-    console.log("🚀 ~ placeOrder ~ amount:", amount)
+    let decimalPlaces;
+    if (symbol === "SOL") {
+        decimalPlaces = 2;
+    } else {
+        decimalPlaces = 4; // Applies to both ETH and BTC
+    }
+    const amount = (jpyBudget / Number(currentPrice)).toFixed(decimalPlaces);
+    console.log("🚀 ~ placeOrder ~ amount:", amount);
 
     const timestamp = Date.now().toString();
-    const method = 'POST';
-    const endPoint = 'https://api.coin.z.com/private';
-    const path = '/v1/order';
+    const method = "POST";
+    const endPoint = "https://api.coin.z.com/private";
+    const path = "/v1/order";
     const reqBody = JSON.stringify({
         symbol: symbol,
         side: "BUY",
@@ -95,28 +109,61 @@ export async function placeOrder() {
         timeInForce: "FAS",
         // executionType: "MARKET",  // 成行で注文する場合は上のtimeInForce, executionTypeををコメントアウトする
         price: currentPrice,
-        size: amount
+        size: amount,
     });
 
     const text = timestamp + method + path + reqBody;
-    const sign = crypto.createHmac('sha256', secretKey).update(text).digest('hex');
+    const sign = crypto.createHmac("sha256", secretKey).update(text).digest("hex");
     const options = {
         headers: {
             "API-KEY": apiKey,
             "API-TIMESTAMP": timestamp,
             "API-SIGN": sign,
-            "Content-Type": "application/json"
-        }
+            "Content-Type": "application/json",
+        },
     };
 
     try {
         const response = await axios.post(endPoint + path, reqBody, options);
         console.log("Order successful:", response.data);
+
+        // Send Slack notification
+        await sendSlackNotification(
+            `Order placed successfully for ${symbol}. Amount: ${amount}, Price: ${currentPrice}`,
+        );
     } catch (error) {
         console.error("Order failed:", error);
+
+        // Send Slack notification for failed order
+        await sendSlackNotification(
+            `Order failed for ${symbol}. Error: ${error instanceof Error ? error.message : "Unknown error"}`,
+        );
     }
 }
 
+/**
+ * Slack通知を行う
+ */
+export async function sendSlackNotification(message: string) {
+    const slackWebhookUrl = await getSlackWebhookUrl();
+
+    if (!slackWebhookUrl) {
+        console.error("Slack Webhook URL is not set");
+        throw new Error("Slack Webhook URL is not set");
+    }
+
+    try {
+        const slackMessage = {
+            text: message,
+        };
+
+        await axios.post(slackWebhookUrl, slackMessage);
+        console.log("Message sent to Slack successfully");
+    } catch (error) {
+        console.error("Failed to send message to Slack:", error);
+        throw error;
+    }
+}
 
 /**
  * 出金アカウントを取得する
